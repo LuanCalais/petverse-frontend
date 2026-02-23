@@ -17,13 +17,7 @@ function handleSubmit() {
 
 <template>
   <div class="auth-page">
-    <!-- Decorative blobs -->
-    <div class="blob blob-1" aria-hidden="true" />
-    <div class="blob blob-2" aria-hidden="true" />
-    <div class="blob blob-3" aria-hidden="true" />
-
     <div class="auth-card animate-scale-in">
-      <!-- Logo -->
       <div class="logo-block">
         <span class="paw-icon" aria-hidden="true">🐾</span>
         <h1 class="logo-title">PetVerse</h1>
@@ -62,8 +56,8 @@ function handleSubmit() {
         </div>
 
         <button type="submit" class="btn-primary" :disabled="authStore.loading">
-          <!-- <span v-if="useAuthStore.loading" class="spinner" /> -->
-          <!-- <span v-else>Entrar 🐶</span> -->
+          <span v-if="authStore.loading" class="spinner" />
+          <span v-else>Entrar 🐶</span>
         </button>
       </form>
 
@@ -81,44 +75,11 @@ function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--c-cream);
   position: relative;
   overflow: hidden;
   padding: 1.5rem;
 }
 
-/* Decorative blobs */
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(64px);
-  opacity: 0.35;
-  pointer-events: none;
-}
-.blob-1 {
-  width: 380px;
-  height: 380px;
-  background: var(--c-amber);
-  top: -120px;
-  right: -80px;
-}
-.blob-2 {
-  width: 280px;
-  height: 280px;
-  background: var(--c-rose);
-  bottom: -60px;
-  left: -80px;
-}
-.blob-3 {
-  width: 200px;
-  height: 200px;
-  background: var(--c-teal);
-  top: 50%;
-  left: 20%;
-  opacity: 0.2;
-}
-
-/* Card */
 .auth-card {
   position: relative;
   z-index: 1;
@@ -131,7 +92,6 @@ function handleSubmit() {
   border: 1.5px solid var(--c-border);
 }
 
-/* Logo */
 .logo-block {
   text-align: center;
   margin-bottom: 2rem;
@@ -158,7 +118,6 @@ function handleSubmit() {
   font-size: 0.9rem;
 }
 
-/* Form */
 .auth-form {
   display: flex;
   flex-direction: column;

@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "/home",
+      redirect: "/feed",
     },
     {
       path: "/login",
@@ -17,6 +17,12 @@ const router = createRouter({
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: () => import("@/views/NotFoundView.vue"),
+    },
+    {
+      path: "/feed",
+      name: "Feed",
+      component: () => import("@/views/OnboardingView.vue"),
+      meta: { requiresAuth: true },
     },
   ],
 });

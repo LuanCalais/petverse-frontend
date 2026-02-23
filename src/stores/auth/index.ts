@@ -18,9 +18,19 @@ export const useAuthStore = defineStore("auth", () => {
     router.push("/login");
   }
 
+  async function fetchMe() {
+    if (!token.value) return;
+    try {
+      console.log("Fetching user data with token:", token.value);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch (err) {
+      logout();
+    }
+  }
+
   function login(data: any) {
     return data;
   }
 
-  return { user, token, loading, error, isAuthenticated, login, logout };
+  return { user, token, loading, error, isAuthenticated, login, logout, fetchMe };
 });

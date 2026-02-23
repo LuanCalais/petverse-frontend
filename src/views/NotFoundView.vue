@@ -23,7 +23,6 @@ const router = useRouter();
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--c-cream);
   position: relative;
   overflow: hidden;
 }

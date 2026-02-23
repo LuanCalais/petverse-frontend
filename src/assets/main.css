@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --c-amber: #f59e0b;
+  --c-amber-light: #fde68a;
+  --c-orange: #f97316;
+  --c-rose: #f43f5e;
+  --c-teal: #0d9488;
+  --c-sky: #0ea5e9;
+  --c-violet: #8b5cf6;
+
+  --c-cream: #fefaf3;
+  --c-sand: #f5efe0;
+  --c-bark: #92400e;
+  --c-soil: #451a03;
+  --c-charcoal: #1c1917;
+  --c-muted: #78716c;
+  --c-border: #e7ddd0;
+  --c-white: #ffffff;
+
+  --c-bg: var(--c-cream);
+  --c-surface: var(--c-white);
+  --c-primary: var(--c-amber);
+  --c-primary-dark: #d97706;
+  --c-text: var(--c-charcoal);
+  --c-text-soft: var(--c-muted);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --shadow-sm:
+    0 1px 3px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-md:
+    0 4px 12px rgba(28, 25, 23, 0.1), 0 2px 6px rgba(28, 25, 23, 0.06);
+  --shadow-lg:
+    0 12px 32px rgba(28, 25, 23, 0.12), 0 4px 12px rgba(28, 25, 23, 0.08);
+  --shadow-card: 0 2px 8px rgba(245, 158, 11, 0.12), 0 0 0 1px var(--c-border);
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 150ms;
+  --t-base: 250ms;
+  --t-slow: 400ms;
+
+  --sidebar-w: 260px;
+  --content-max: 680px;
+  --nav-h: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100vh;
+  padding: 24px;
+  overflow-x: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.blob-1 {
+  width: 380px;
+  height: 380px;
+  background: var(--c-amber);
+  top: -120px;
+  right: -80px;
+}
+.blob-2 {
+  width: 280px;
+  height: 280px;
+  background: var(--c-rose);
+  bottom: -60px;
+  left: -80px;
+}
+.blob-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--c-teal);
+  top: 50%;
+  left: 20%;
+  opacity: 0.2;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-muted);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pawBounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(10deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--t-slow) var(--ease-smooth) both;
+}
+.animate-scale-in {
+  animation: scaleIn var(--t-base) var(--ease-spring) both;
+}
+
+.page-enter-active {
+  animation: fadeIn var(--t-slow) var(--ease-smooth);
+}
+.page-leave-active {
+  animation: fadeIn var(--t-base) var(--ease-smooth) reverse;
+}
+
+.slide-up-enter-active {
+  transition: all var(--t-slow) var(--ease-spring);
+}
+.slide-up-leave-active {
+  transition: all var(--t-base) var(--ease-smooth);
+}
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
