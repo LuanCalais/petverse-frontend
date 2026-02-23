@@ -1,5 +1,5 @@
 import router from "@/router";
-import { User } from "@/types";
+import { RegisterForm, User } from "@/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -28,9 +28,34 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function register(form: RegisterForm) {
+    loading.value = true;
+    error.value = null;
+    try {
+      const { name, email, phone } = form;
+      console.log("Registering user with data:", { name, email, phone });
+      // const { data } = await authApi.register({ name, email, password, phone });
+    } catch (e: unknown) {
+      const err = e as { response?: { data?: { message?: string } } };
+      error.value = err?.response?.data?.message ?? "Erro ao criar conta";
+    } finally {
+      loading.value = false;
+    }
+  }
+
   function login(data: any) {
     return data;
   }
 
-  return { user, token, loading, error, isAuthenticated, login, logout, fetchMe };
+  return {
+    user,
+    token,
+    loading,
+    error,
+    isAuthenticated,
+    login,
+    logout,
+    fetchMe,
+    register
+  };
 });
