@@ -35,6 +35,7 @@ export const useAuthStore = defineStore("auth", () => {
       const { name, email, phone } = form;
       console.log("Registering user with data:", { name, email, phone });
       // const { data } = await authApi.register({ name, email, password, phone });
+      router.push("/onboarding");
     } catch (e: unknown) {
       const err = e as { response?: { data?: { message?: string } } };
       error.value = err?.response?.data?.message ?? "Erro ao criar conta";
@@ -56,6 +57,6 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     logout,
     fetchMe,
-    register
+    register,
   };
 });

@@ -1,171 +1,179 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
 
-const showModal = ref(false);
-const isLoading = ref(false);
-const postsMock = ref([]);
-
-onMounted(() => {
-  isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
-});
+const router = useRouter();
+const authStore = useAuthStore();
 </script>
 
 <template>
-  <AppLayout>
-    <div class="feed">
-      <div class="feed-header">
-        <div>
-          <h1 class="feed-title">Feed 🐾</h1>
-          <p class="feed-sub">Veja o que os pets estão aprontando</p>
+  <div class="onboarding">
+    <div class="card animate-scale-in">
+      <div class="confetti" aria-hidden="true">🎉🐾🎊</div>
+      <h1>
+        Bem-vindo ao PetVerse,<br /><em>{{ authStore.user?.name ?? "Usuário" }}</em
+        >!
+      </h1>
+      <p class="subtitle">
+        Seu pet está esperando para criar a conta dele também!
+      </p>
+
+      <div class="steps">
+        <div class="step-item">
+          <span class="step-num">1</span>
+          <div>
+            <strong>Crie o perfil do seu pet</strong>
+            <p>Nome, foto, espécie e uma bio.</p>
+          </div>
         </div>
-        <button class="btn-new-post" @click="showModal = true">
-          + Novo post
-        </button>
+        <div class="step-item">
+          <span class="step-num">2</span>
+          <div>
+            <strong>Faça a primeira postagem</strong>
+            <p>Mostre ao mundo quem é seu bichinho!</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">3</span>
+          <div>
+            <strong>Explore o Feed</strong>
+            <p>Veja o que outros pets estão fazendo.</p>
+          </div>
+        </div>
       </div>
-      <div v-if="isLoading" class="loading-state">
-        <div class="loading-paw">🐾</div>
-        <p>Buscando as aventuras dos pets…</p>
-      </div>
-      <div
-        v-else-if="postsMock.length === 0"
-        class="empty-state"
-      >
-        <span class="empty-icon">📭</span>
-        <h3>Feed vazio!</h3>
-        <p>Nenhum pet postou ainda. Seja o primeiro!</p>
-        <button class="btn-new-post" @click="showModal = true">
-          Criar post
+
+      <div class="actions">
+        <button class="btn-primary" @click="router.push('/pets/new')">
+          Adicionar meu pet 🐾
         </button>
+        <button class="btn-skip" @click="router.push('/feed')">Depois</button>
       </div>
     </div>
-  </AppLayout>
+  </div>
 </template>
 
 <style scoped>
-.feed {
+.onboarding {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--c-white);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  border: 1.5px solid var(--c-border);
+  text-align: center;
+}
+
+.confetti {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  animation: pawBounce 1.5s ease-in-out infinite;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  color: var(--c-charcoal);
+  line-height: 1.25;
+}
+h1 em {
+  color: var(--c-amber);
+  font-style: normal;
+}
+
+.subtitle {
+  color: var(--c-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.steps {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 2rem;
 }
-
-.feed-header {
+.step-item {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
   gap: 1rem;
 }
-
-.feed-title {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--c-charcoal);
-  letter-spacing: -0.03em;
-  margin-bottom: 0.25rem;
-}
-
-.feed-sub {
-  color: var(--c-muted);
+.step-num {
+  width: 32px;
+  height: 32px;
+  background: var(--c-amber-light);
+  color: var(--c-bark);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
   font-size: 0.875rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-item strong {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--c-charcoal);
+  display: block;
+  margin-bottom: 0.125rem;
+}
+.step-item p {
+  font-size: 0.825rem;
+  color: var(--c-muted);
+  margin: 0;
 }
 
-.btn-new-post {
-  padding: 0.625rem 1.25rem;
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-primary {
+  padding: 0.875rem;
   background: var(--c-amber);
   color: white;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
   font-weight: 700;
-  font-size: 0.875rem;
   font-family: var(--font-body);
-  white-space: nowrap;
-  flex-shrink: 0;
   transition:
     background var(--t-fast),
     transform var(--t-fast) var(--ease-spring),
     box-shadow var(--t-fast);
 }
-.btn-new-post:hover {
+.btn-primary:hover {
   background: var(--c-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
 }
 
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 4rem 0;
+.btn-skip {
   color: var(--c-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem;
+  transition: color var(--t-fast);
 }
-.loading-paw {
-  font-size: 2.5rem;
-  animation: pawBounce 1s ease-in-out infinite;
-}
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 4rem 0;
-  text-align: center;
-}
-.empty-icon {
-  font-size: 3rem;
-}
-.empty-state h3 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-}
-.empty-state p {
-  color: var(--c-muted);
-}
-
-.posts-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.load-more {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-}
-.btn-load-more {
-  padding: 0.625rem 1.5rem;
-  background: var(--c-white);
-  border: 1.5px solid var(--c-border);
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: 0.875rem;
-  font-family: var(--font-body);
+.btn-skip:hover {
   color: var(--c-charcoal);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition:
-    background var(--t-fast),
-    border-color var(--t-fast);
-}
-.btn-load-more:hover:not(:disabled) {
-  background: var(--c-sand);
-  border-color: var(--c-amber);
-}
-.btn-load-more:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--c-border);
-  border-top-color: var(--c-amber);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
 }
 </style>

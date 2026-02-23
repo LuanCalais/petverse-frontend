@@ -20,15 +20,21 @@ const router = createRouter({
       meta: { public: true },
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "NotFound",
-      component: () => import("@/views/NotFoundView.vue"),
+      path: "/onboarding",
+      name: "Onboarding",
+      component: () => import("@/views/OnboardingView.vue"),
+      meta: { requiresAuth: true },
     },
     {
       path: "/feed",
       name: "Feed",
-      component: () => import("@/views/OnboardingView.vue"),
+      component: () => import("@/views/FeedView.vue"),
       meta: { requiresAuth: true },
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: () => import("@/views/NotFoundView.vue"),
     },
   ],
 });
