@@ -1,3 +1,4 @@
+import { authService } from "@/api/services/auth";
 import router from "@/router";
 import { RegisterForm, User } from "@/types";
 import { defineStore } from "pinia";
@@ -32,9 +33,9 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
     error.value = null;
     try {
-      const { name, email, phone } = form;
-      console.log("Registering user with data:", { name, email, phone });
-      // const { data } = await authApi.register({ name, email, password, phone });
+      const { name, email, phone, password } = form;
+      const { data } = await authService.register({ name, email, password, phone });
+      console.log(data);
       router.push("/onboarding");
     } catch (e: unknown) {
       const err = e as { response?: { data?: { message?: string } } };

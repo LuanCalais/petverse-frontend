@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { UserService } from "@/api/services/user";
 import { useAuthStore } from "@/stores/auth";
 import { RegisterForm } from "@/types";
 import { reactive, ref } from "vue";
