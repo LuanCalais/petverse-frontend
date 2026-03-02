@@ -1,6 +1,6 @@
 import { authService } from "@/api/services/auth";
 import router from "@/router";
-import { RegisterForm, User } from "@/types";
+import { LoginForm, RegisterForm, User } from "@/types";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -11,6 +11,24 @@ export const useAuthStore = defineStore("auth", () => {
   const error = ref<string | null>(null);
 
   const isAuthenticated = computed(() => !!token.value);
+
+  async function login(form: LoginForm) {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { data } = await authService.login(form);
+      token.value = data.token;
+      user.value = data.user;
+      localStorage.setItem("petverse_token", data.token);
+      return true;
+    } catch (e: any) {
+      error.value = e?.response?.data?.message ?? "Credenciais inválidas";
+      return false;
+    } finally {
+      loading.value = false;
+    }
+  }
 
   function logout() {
     user.value = null;
@@ -34,7 +52,12 @@ export const useAuthStore = defineStore("auth", () => {
     error.value = null;
     try {
       const { name, email, phone, password } = form;
-      const { data } = await authService.register({ name, email, password, phone });
+      const { data } = await authService.register({
+        name,
+        email,
+        password,
+        phone,
+      });
       console.log(data);
       router.push("/onboarding");
     } catch (e: unknown) {
@@ -43,10 +66,6 @@ export const useAuthStore = defineStore("auth", () => {
     } finally {
       loading.value = false;
     }
-  }
-
-  function login(data: any) {
-    return data;
   }
 
   return {
