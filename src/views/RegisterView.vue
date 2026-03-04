@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { UserService } from "@/api/services/user";
 import { useAuthStore } from "@/stores/auth";
 import { RegisterForm } from "@/types";
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
+const router = useRouter();
 
 const form = reactive<RegisterForm>({
   name: "",
@@ -16,13 +17,14 @@ const form = reactive<RegisterForm>({
 
 const passwordMismatch = ref(false);
 
-function handleSubmit() {
+async function handleSubmit() {
   if (form.password !== form.confirmPassword) {
     passwordMismatch.value = true;
     return;
   }
   passwordMismatch.value = false;
-  authStore.register(form);
+  const res = await authStore.register(form)
+  if (res) router.push('/onboarding')
 }
 </script>
 

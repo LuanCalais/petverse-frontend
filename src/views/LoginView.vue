@@ -2,7 +2,9 @@
 import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import type { LoginForm } from "@/types";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const authStore = useAuthStore();
 
 const form = reactive<LoginForm>({
@@ -10,8 +12,9 @@ const form = reactive<LoginForm>({
   password: "",
 });
 
-function handleSubmit() {
-  authStore.login(form);
+async function handleSubmit() {
+  const res = await authStore.login(form);
+  if (res) router.push('/feed');
 }
 </script>
 
@@ -25,9 +28,9 @@ function handleSubmit() {
       </div>
 
       <form class="auth-form" @submit.prevent="handleSubmit">
-        <!-- <div v-if="authStore.error" class="error-banner">
+        <div v-if="authStore.error" class="error-banner">
           {{ authStore.error }}
-        </div> -->
+        </div>
 
         <div class="field">
           <label for="email" class="label">E-mail</label>

@@ -58,11 +58,14 @@ export const useAuthStore = defineStore("auth", () => {
         password,
         phone,
       });
-      console.log(data);
-      router.push("/onboarding");
+      token.value = data.token;
+      user.value = data.user;
+      localStorage.setItem("petverse_token", data.token);
+      return !!data.token;
     } catch (e: unknown) {
       const err = e as { response?: { data?: { message?: string } } };
       error.value = err?.response?.data?.message ?? "Erro ao criar conta";
+      return false;
     } finally {
       loading.value = false;
     }
